@@ -8,7 +8,45 @@ Some description
 
 == Usage
 
-Usage info
+  class User < ActiveRecord::Base
+    # implements the following attributes: name, email, password_hash, password_salt
+  end
+
+  class UserPresenter < Presenter
+    expose :name, :email
+  end
+
+  user = UserPresenter.new(User.first)
+  users = UserPresenter.map(User.all)
+
+If you're using Simple Presenter within Rails, presenters also have access to:
+
+* route helpers: just use the <tt>routes</tt> or <tt>r</tt> methods
+* view helpers: just use the <tt>helpers</tt> or <tt>h</tt> methods
+* I18n methods: just use the <tt>translate</tt>, <tt>t</tt>, <tt>localize</tt> or <tt>l</tt> methods
+
+For additional usage, check the specs.
+
+== TO-DO
+
+* Recognize ActiveRecord objects and automatically expose attributes used by url and form helpers (like <tt>Model.model_name</tt>, <tt>Model#to_key</tt>, and <tt>Model#to_param</tt>).
+* Override <tt>respond_to?</tt> to reflect exposed attributes.
+
+== Troubleshooting
+
+If you're having problems because already have a class/module called Presenter that is conflicting with this gem, you can require the namespace and inherit from <tt>SimplePresenter::Base</tt>.
+
+  require "simple_presenter/namespace"
+
+  class UserPresenter < SimplePresenter::Base
+  end
+
+If you're using Rails/Bundler or something like that, remember to override the <tt>:require</tt> option.
+
+  # Gemfile
+  source :rubygems
+
+  gem "simple_presenter", :require => "simple_presenter/namespace"
 
 == Maintainer
 

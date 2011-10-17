@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Nando Vieira"]
   s.email       = ["fnando.vieira@gmail.com"]
   s.homepage    = "http://rubygems.org/gems/simple_presenter"
-  s.summary     = "TODO: Write a description"
+  s.summary     = "A simple presenter/facade/decorator/whatever implementation."
   s.description = s.summary
 
   s.files         = `git ls-files`.split("\n")
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  # s.add_dependency "activesupport"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec", "~> 2.7"
+  s.add_development_dependency "pry"
 end
