@@ -20,10 +20,12 @@ describe SimplePresenter::Base do
 
   describe ".subjects" do
     it "is aliased as .subject" do
-      subject_mock = mock("subject")
-      subject = described_class.new(subject_mock)
+      thing = mock("Thing")
+      presenter_class = Class.new(Presenter)
+      presenter_class.subject :thing
+      presenter = presenter_class.new(thing)
 
-      subject.instance_variable_get("@subject").should eql(subject_mock)
+      presenter.instance_variable_get("@thing").should eql(thing)
     end
 
     context "using defaults" do
