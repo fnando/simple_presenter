@@ -18,6 +18,10 @@ module SimplePresenter
       @subjects
     end
 
+    class << self
+      alias_method :subject, :subjects
+    end
+
     # This method will return a presenter for each item of collection.
     #
     #   users = UserPresenter.map(User.all)

@@ -19,6 +19,13 @@ describe SimplePresenter::Base do
   end
 
   describe ".subjects" do
+    it "is aliased as .subject" do
+      subject_mock = mock("subject")
+      subject = described_class.new(subject_mock)
+
+      subject.instance_variable_get("@subject").should eql(subject_mock)
+    end
+
     context "using defaults" do
       let(:user) { stub :name => "John Doe", :email => "john@doe.com" }
       subject { UserPresenter.new(user) }
