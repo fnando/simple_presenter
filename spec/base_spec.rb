@@ -16,6 +16,18 @@ describe SimplePresenter::Base do
 
       it { should respond_to(:user_name) }
     end
+
+    context "exposing iterators" do
+      subject { IteratorPresenter.new([1, 2, 3]) }
+
+      its(:each) { should be_a(Enumerator) }
+
+      it "uses provided block" do
+        numbers = []
+        subject.each {|n| numbers << n}
+        numbers.should == [1, 2, 3]
+      end
+    end
   end
 
   describe ".subjects" do

@@ -59,9 +59,9 @@ module SimplePresenter
         method_name = [subject, attr_name].compact.join("_")
 
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
-          def #{method_name}                                    # def user_name
-            proxy_message(#{subject.inspect}, "#{attr_name}")   #   proxy_message("user", "name")
-          end                                                   # end
+          def #{method_name}(&block)                                    # def user_name(&block)
+            proxy_message(#{subject.inspect}, "#{attr_name}", &block)   #   proxy_message("user", "name")
+          end                                                           # end
         RUBY
       end
     end
@@ -90,11 +90,11 @@ module SimplePresenter
     end
 
     private
-    def proxy_message(subject_name, method)
+    def proxy_message(subject_name, method, &block)
       subject_name ||= self.class.subjects.first
       subject = instance_variable_get("@#{subject_name}")
       subject = instance_variable_get("@#{self.class.subjects.first}").__send__(subject_name) unless subject || self.class.subjects.include?(subject_name)
-      subject.respond_to?(method) ? subject.__send__(method) : nil
+      subject.respond_to?(method) ? subject.__send__(method, &block) : nil
     end
   end
 end
