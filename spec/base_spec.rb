@@ -96,4 +96,12 @@ describe SimplePresenter::Base do
       subject.instance_variable_get("@subject").should == user
     end
   end
+
+  describe "inherited presenter" do
+    it "inherits subjects" do
+      user = User.new
+      presenter = GamerPresenter.new(user)
+      presenter.person.should == user
+    end
+  end
 end
