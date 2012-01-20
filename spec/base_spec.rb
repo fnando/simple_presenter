@@ -30,6 +30,26 @@ describe SimplePresenter::Base do
     end
   end
 
+  describe ".attributes" do
+    context "using defaults" do
+      let(:presenter) { UserPresenter }
+      subject { presenter.attributes }
+
+      it { should have(2).items }
+      its([:name]) { should eql([:name, {}]) }
+      its([:email]) { should eql([:email, {}]) }
+    end
+
+    context "using provided options" do
+      let(:presenter) { CommentPresenter }
+      subject { presenter.attributes }
+
+      it { should have(3).items }
+      its([:user_name]) { should eql([:name, {with: :user}]) }
+      its([:post_title]) { should eql([:title, {with: :post}]) }
+    end
+  end
+
   describe ".subjects" do
     it "is aliased as .subject" do
       thing = mock("Thing")
@@ -98,10 +118,22 @@ describe SimplePresenter::Base do
   end
 
   describe "inherited presenter" do
-    it "inherits subjects" do
-      user = User.new
-      presenter = GamerPresenter.new(user)
-      presenter.person.should == user
+    let(:presenter) { Class.new(CommentPresenter) }
+
+    context "subjects" do
+      subject { presenter.subjects }
+
+      specify { subject.should have(2).items }
+      specify { subject.first.should eql(:comment) }
+      specify { subject.last.should eql(:post) }
+    end
+
+    context "attributes" do
+      subject { presenter.attributes }
+
+      it { should have(3).items }
+      its([:user_name]) { should eql([:name, {with: :user}]) }
+      its([:post_title]) { should eql([:title, {with: :post}]) }
     end
   end
 end

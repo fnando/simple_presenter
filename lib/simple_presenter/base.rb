@@ -8,8 +8,8 @@ module SimplePresenter
     #
     #   class CommentPresenter < Presenter
     #     subjects :comment, :post
-    #     expose :body                  # will expose comment.body
-    #     expose :title, :with => :post # will expose post.title
+    #     expose :body                  # will expose comment.body through CommentPresenter#body
+    #     expose :title, :with => :post # will expose post.title through CommentPresenter#post_title
     #   end
     #
     def self.subjects(*names)
@@ -20,6 +20,32 @@ module SimplePresenter
 
     class << self
       alias_method :subject, :subjects
+    end
+
+    # Propagate inherited subjects and attributes.
+    #
+    def self.inherited(child)
+      child.subjects(*subjects)
+      attributes.each_value do |attr_name, options|
+        child.expose(attr_name, options)
+      end
+    end
+
+    # Store all attributes and options that have been exposed.
+    #
+    #   class UserPresenter < Presenter
+    #     expose :name
+    #     expose :street, with: "address"
+    #   end
+    #
+    #   UserPresenter.attributes
+    #   #=> {
+    #   #=>   name: [:name, {}],
+    #   #=>   address_street: [:street, {with: "address"}]
+    #   #=> }
+    #
+    def self.attributes
+      @attributes ||= {}
     end
 
     # This method will return a presenter for each item of collection.
@@ -57,6 +83,7 @@ module SimplePresenter
       attrs.each do |attr_name|
         subject = options.fetch(:with, nil)
         method_name = [subject, attr_name].compact.join("_")
+        attributes[method_name.to_sym] = [attr_name, options]
 
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{method_name}(&block)                                    # def user_name(&block)
