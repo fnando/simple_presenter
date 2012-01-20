@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_presenter (0.1.2)
+    simple_presenter (0.1.3)
 
 GEM
   remote: http://rubygems.org/
