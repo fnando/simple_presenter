@@ -66,6 +66,14 @@ describe SimplePresenter::Base do
 
       its(:name) { should == "John Doe" }
       its(:email) { should == "john@doe.com" }
+
+      it "responds to private subject method" do
+        expect(subject.private_methods).to include(:subject)
+      end
+
+      it "returns subject" do
+        expect(subject.send(:subject)).to eql(user)
+      end
     end
 
     context "specifying several subjects" do
@@ -77,6 +85,22 @@ describe SimplePresenter::Base do
       its(:body) { should == "Some comment" }
       its(:post_title) { should == "Some post" }
       its(:user_name) { should == "John Doe" }
+
+      it "responds to private comment method" do
+        expect(subject.private_methods).to include(:comment)
+      end
+
+      it "responds to private post method" do
+        expect(subject.private_methods).to include(:post)
+      end
+
+      it "returns comment subject" do
+        expect(subject.send(:comment)).to eql(comment)
+      end
+
+      it "returns post subject" do
+        expect(subject.send(:post)).to eql(post)
+      end
     end
 
     context "when subjects are nil" do

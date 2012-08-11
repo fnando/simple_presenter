@@ -12,9 +12,20 @@ module SimplePresenter
     #     expose :title, :with => :post # will expose post.title through CommentPresenter#post_title
     #   end
     #
+    # Subjects can be accessed by a private name with the same name.
+    # So the above subjects can be accessed internally by the methods +comment+ and +post+.
+    #
+    # If you're not setting any special name, then you can access it using the +subject+ method.
+    #
     def self.subjects(*names)
       @subjects ||= [:subject]
-      @subjects = names unless names.empty?
+
+      unless names.empty?
+        @subjects = names
+        attr_reader *names
+        private *names
+      end
+
       @subjects
     end
 
