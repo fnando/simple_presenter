@@ -2,6 +2,6 @@ require "spec_helper"
 
 describe SimplePresenter do
   it "assigns SimplePresenter::Base" do
-    ::Presenter.should be(SimplePresenter::Base)
+    expect(::Presenter).to be(SimplePresenter::Base)
   end
 end

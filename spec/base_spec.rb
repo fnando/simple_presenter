@@ -25,7 +25,7 @@ describe SimplePresenter::Base do
       it "uses provided block" do
         numbers = []
         subject.each {|n| numbers << n}
-        numbers.should == [1, 2, 3]
+        expect(numbers).to eql([1, 2, 3])
       end
     end
   end
@@ -57,7 +57,7 @@ describe SimplePresenter::Base do
       presenter_class.subject :thing
       presenter = presenter_class.new(thing)
 
-      presenter.instance_variable_get("@thing").should eql(thing)
+      expect(presenter.instance_variable_get("@thing")).to eql(thing)
     end
 
     context "using defaults" do
@@ -137,7 +137,7 @@ describe SimplePresenter::Base do
     subject { UserPresenter.new(user) }
 
     it "assigns the subject" do
-      subject.instance_variable_get("@subject").should == user
+      expect(subject.instance_variable_get("@subject")).to eql(user)
     end
   end
 
@@ -147,9 +147,9 @@ describe SimplePresenter::Base do
     context "subjects" do
       subject { presenter.subjects }
 
-      specify { subject.should have(2).items }
-      specify { subject.first.should eql(:comment) }
-      specify { subject.last.should eql(:post) }
+      specify { expect(subject).to have(2).items }
+      specify { expect(subject.first).to eql(:comment) }
+      specify { expect(subject.last).to eql(:post) }
     end
 
     context "attributes" do
