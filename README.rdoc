@@ -25,6 +25,10 @@ If you're using Simple Presenter within Rails, presenters also have access to:
 * view helpers: just use the <tt>helpers</tt> or <tt>h</tt> methods
 * I18n methods: just use the <tt>translate</tt>, <tt>t</tt>, <tt>localize</tt> or <tt>l</tt> methods
 
+If you want to to use <tt>*_url</tt> route methods, make sure you set the <tt>default_url_options</tt> option. You can use the <tt>config.simple_presenter.default_url_options</tt> method, which defaults to <tt>config.action_mailer.default_url_options</tt>. You can add something like the following to your <tt>config/environments/development.rb</tt>, for instance:
+
+  config.simple_presenter.default_url_options = {:host => "localhost:3000"}
+
 For additional usage, check the specs.
 
 == TO-DO
