@@ -83,9 +83,11 @@ module SimplePresenter
     #   class CommentPresenter < Presenter
     #     expose :body, :created_at
     #     expose :name, :with => :user
+    #     expose :name, :as => :author
     #   end
     #
     # The presenter above will expose the methods +body+, +created_at+, and +user_name+.
+    # Additionaly, it will create an alias called +author+ to the +name+ attribute.
     #
     def self.expose(*attrs)
       options = attrs.pop if attrs.last.kind_of?(Hash)
@@ -93,7 +95,12 @@ module SimplePresenter
 
       attrs.each do |attr_name|
         subject = options.fetch(:with, nil)
-        method_name = [subject, attr_name].compact.join("_")
+
+        method_name = [
+          subject,
+          options.fetch(:as, attr_name)
+        ].compact.join("_")
+
         attributes[method_name.to_sym] = [attr_name, options]
 
         class_eval <<-RUBY, __FILE__, __LINE__ + 1

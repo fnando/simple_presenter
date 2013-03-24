@@ -17,6 +17,14 @@ describe SimplePresenter::Base do
       it { should respond_to(:user_name) }
     end
 
+    context "using :as option" do
+      let(:site) { OpenStruct.new(:site => "http://example.org") }
+      subject { AliasPresenter.new(site) }
+
+      it { should respond_to(:url) }
+      it { expect(subject.url).to eql("http://example.org") }
+    end
+
     context "exposing iterators" do
       subject { IteratorPresenter.new([1, 2, 3]) }
 
