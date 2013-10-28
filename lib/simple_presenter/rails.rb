@@ -5,9 +5,7 @@ module SimplePresenter
 
   class Base
     delegate :translate, :t, :localize, :l, :to => :helpers
-    private :translate, :t, :localize, :l
 
-    private
     def self.routes_module
       @routes_module ||= Module.new do
         include Rails.application.routes.url_helpers
