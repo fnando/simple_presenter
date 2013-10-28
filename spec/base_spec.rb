@@ -60,7 +60,7 @@ describe SimplePresenter::Base do
 
   describe ".subjects" do
     it "is aliased as .subject" do
-      thing = mock("Thing")
+      thing = double("Thing")
       presenter_class = Class.new(Presenter)
       presenter_class.subject :thing
       presenter = presenter_class.new(thing)
@@ -69,7 +69,7 @@ describe SimplePresenter::Base do
     end
 
     context "using defaults" do
-      let(:user) { stub :name => "John Doe", :email => "john@doe.com" }
+      let(:user) { double :name => "John Doe", :email => "john@doe.com" }
       subject { UserPresenter.new(user) }
 
       its(:name) { should == "John Doe" }
@@ -85,9 +85,9 @@ describe SimplePresenter::Base do
     end
 
     context "specifying several subjects" do
-      let(:user) { stub :name => "John Doe" }
-      let(:comment) { stub :body => "Some comment", :user => user }
-      let(:post) { stub :title => "Some post" }
+      let(:user) { double :name => "John Doe" }
+      let(:comment) { double :body => "Some comment", :user => user }
+      let(:post) { double :title => "Some post" }
       subject { CommentPresenter.new(comment, post) }
 
       its(:body) { should == "Some comment" }
@@ -112,7 +112,7 @@ describe SimplePresenter::Base do
     end
 
     context "when subjects are nil" do
-      let(:comment) { stub :body => "Some comment" }
+      let(:comment) { double :body => "Some comment" }
       subject { CommentPresenter.new(comment, nil) }
 
       its(:post_title) { should be_nil }
@@ -121,7 +121,7 @@ describe SimplePresenter::Base do
 
   describe ".map" do
     context "wraps a single subject" do
-      let(:user) { stub :name => "John Doe" }
+      let(:user) { double :name => "John Doe" }
       subject { UserPresenter.map([user])[0] }
 
       it { should be_a(UserPresenter) }
@@ -129,9 +129,9 @@ describe SimplePresenter::Base do
     end
 
     context "wraps several subjects" do
-      let(:comment) { stub :body => "Some comment" }
-      let(:post) { stub :title => "Some post" }
-      let(:user) { stub :name => "John Doe" }
+      let(:comment) { double :body => "Some comment" }
+      let(:post) { double :title => "Some post" }
+      let(:user) { double :name => "John Doe" }
       subject { CommentPresenter.map([comment], post)[0] }
 
       it { should be_a(CommentPresenter) }
@@ -141,7 +141,7 @@ describe SimplePresenter::Base do
   end
 
   describe "#initialize" do
-    let(:user) { mock }
+    let(:user) { double }
     subject { UserPresenter.new(user) }
 
     it "assigns the subject" do
