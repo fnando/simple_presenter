@@ -1,6 +1,6 @@
 = simple_presenter
 
-Some description
+<b>I now recommend a much simpler library called Burgundy.</b> http://github.com/fnando/burgundy
 
 == Installation
 
