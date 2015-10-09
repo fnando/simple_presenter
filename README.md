@@ -1,6 +1,6 @@
 # simple_presenter
 
-[![](https://dl.dropboxusercontent.com/u/1540890/simple_presenter.svg)](http://github.com/fnando/burgundy)
+[![This project was superseded by https://github.com/fnando/burgundy.](http://messages.hellobits.com/warning.svg?message=This%20project%20was%20superseded%20by%20https%3A%2F%2Fgithub.com%2Ffnando%2Fburgundy.)](http://github.com/fnando/burgundy)
 
 ## Installation
 
